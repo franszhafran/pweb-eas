@@ -84,7 +84,6 @@ class AdminController {
             }
         }
 
-        var_dump($students);
         echo StudentManage::init()->setData([
             "students" => $students,  
         ])->generate();
