@@ -8,7 +8,9 @@ class StudentCreate {
     }
 
     public static function init(): self {
-        return new self;
+        $s = new self;
+        $s->data = [];
+        return $s;
     }
 
     public function setData($data): self {

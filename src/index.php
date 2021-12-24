@@ -26,6 +26,7 @@ $route_map->addRouteMap("/studentcreate", Controller\AdminController::class, "st
 
 // Student
 $route_map->addRouteMap("/classview", Controller\StudentController::class, "classview");
+$route_map->addRouteMap("/create_student", Controller\AdminController::class, "createStudent");
 $route_map->addRouteMap("/assignment", Controller\StudentController::class, "assignment");
 $route_map->addRouteMap("/attendance", Controller\StudentController::class, "attendance");
 $route_map->addRouteMap("/academiccalendar", Controller\StudentController::class, "academiccalendar");

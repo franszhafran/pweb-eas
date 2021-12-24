@@ -10,6 +10,7 @@ class Router {
                 return $resolver->{$route[2]}();
             }
         }
+        echo "404";
     }
 }
 ?>

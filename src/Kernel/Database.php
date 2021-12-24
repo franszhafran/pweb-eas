@@ -7,6 +7,7 @@ class Database {
         $this->ip = "pweb_mysql";
         $this->username = "user";
         $this->password = "user";
+        $this->database = "laravel_docker";
     }
 
     public static function init(): Database {
@@ -16,7 +17,7 @@ class Database {
     }
 
     public function connect() {
-        $conn = new \mysqli($this->ip, $this->username, $this->password);
+        $conn = new \mysqli($this->ip, $this->username, $this->password, $this->database);
         $this->connection = $conn;
     }
 
