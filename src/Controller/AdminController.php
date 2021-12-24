@@ -23,6 +23,39 @@ class AdminController {
             "request" => "test",
         ])->generate();
     }
+    
+    public function studentcreate() {
+        if($_SERVER["REQUEST_METHOD"] == "POST") {
+            return $this->createStudent();
+        }
+        echo StudentCreate::init()->generate();
+    }
+
+    public function studentManage() {
+        if($_SERVER["REQUEST_METHOD"] == "POST") {
+            return $this->createStudent();
+        }
+
+        echo StudentManage::init()->setData([
+            "students" => $this->studentManageData(),  
+        ])->generate();
+    }
+
+    private function studentManageData() {
+        $db = Database::init();
+        $result = $db->query("SELECT name, username FROM users WHERE type='student'");
+        
+        $students = [];
+
+        if($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()) {
+                $students[] = $row;
+            }
+        }
+        $db->close();
+
+        return $students;
+    }
 
     private function loginAction() {
         $request = Request::init();
@@ -64,35 +97,5 @@ class AdminController {
 
         header( "Refresh:3; url=/studentcreate", true, 303);
         echo "<script>alert('Berhasil membuat student, mengarahkan...')</script>Mengarahkan...";
-    }
-
-    public function studentcreate() {
-        if($_SERVER["REQUEST_METHOD"] == "POST") {
-            return $this->createStudent();
-        }
-        echo StudentCreate::init()->generate();
-    }
-
-    public function studentManage() {
-        if($_SERVER["REQUEST_METHOD"] == "POST") {
-            return $this->createStudent();
-        }
-
-        $db = Database::init();
-        $result = $db->query("SELECT name, username FROM users WHERE type='student'");
-        
-        $students = [];
-
-        if($result->num_rows > 0) {
-            while($row = $result->fetch_assoc()) {
-                $students[] = $row;
-            }
-        }
-
-        echo StudentManage::init()->setData([
-            "students" => $students,  
-        ])->generate();
-
-        $db->close();
     }
 }
