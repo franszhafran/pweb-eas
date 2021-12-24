@@ -122,6 +122,21 @@ class AdminController {
         $password = md5("password");
 
         $queries['seed_users_admin'] = "INSERT INTO `users` (username, password, type) VALUES ('admin', '{$password}', 'admin')";
+        $queries['seed_users_teacher'] = "INSERT INTO `users` (username, password, type, name) VALUES ('adi', '{$password}', 'teacher', 'Ado Setiadi')";
+
+        $queries['query_drop_classes'] = "DROP TABLE IF EXISTS `classes`";
+        $queries['query_create_classes'] = "CREATE TABLE `classes` (
+          `id` int NOT NULL AUTO_INCREMENT,
+          `subject` varchar(100) DEFAULT NULL,
+          `name` varchar(100) DEFAULT NULL,
+          `description` varchar(100) DEFAULT NULL,
+          `schedule` varchar(100) DEFAULT NULL,
+          `teacher_id` int DEFAULT NULL,
+          PRIMARY KEY (`id`),
+          UNIQUE KEY `classes_UN` (`subject`),
+          KEY `classes_FK` (`teacher_id`),
+          CONSTRAINT `classes_FK` FOREIGN KEY (`teacher_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;";
 
         $conn = Database::init()->getConnection();
         foreach($queries as $key=>$query) {

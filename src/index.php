@@ -37,6 +37,11 @@ $route_map->addRouteMap("/student/academiccalendar", Controller\StudentControlle
 $route_map->addRouteMap("/student/sourcematerial", Controller\StudentController::class, "sourcematerial");
 $route_map->addRouteMap("/student/login", Controller\StudentController::class, "login");
 
+// Teacher
+$route_map->addRouteMap("/teacher/login", Controller\TeacherController::class, "login");
+$route_map->addRouteMap("/teacher/classes", Controller\TeacherController::class, "classList");
+$route_map->addRouteMap("/teacher/classes/create", Controller\TeacherController::class, "classCreate");
+
 // System
 $route_map->addRouteMap("/migrate", Controller\AdminController::class, "migrate");
 
