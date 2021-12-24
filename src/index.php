@@ -1,4 +1,5 @@
 <?php
+
 namespace App;
 
 function load_classphp($directory) {
@@ -18,6 +19,8 @@ function load_classphp($directory) {
 }
 
 load_classphp('./');
+
+session_start();
 
 $route_map = new Kernel\RouteMap();
 // Admin
