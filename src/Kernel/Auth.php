@@ -3,7 +3,10 @@ namespace App\Kernel;
 
 class Auth {
     private function check() {
-        return $_SESSION['username'] != "" && isset($_SESSION['username']);
+        if(isset($_SESSION['username'])) {
+            return $_SESSION['username'] != "";
+        }
+        return false;
     }
 
     private function auth(string $username) {
