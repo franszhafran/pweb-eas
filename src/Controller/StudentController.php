@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Views\Student\Assignment;
+use App\Views\Student\Attendance;
 use App\Views\Student\ClassView;
 
 class StudentController {
@@ -14,6 +15,12 @@ class StudentController {
     }
     public function assignment() {
         echo Assignment::init()->setData([
+            "request" => "test",
+        ])->generate();
+
+    }
+    public function attendance() {
+        echo Attendance::init()->setData([
             "request" => "test",
         ])->generate();
 
