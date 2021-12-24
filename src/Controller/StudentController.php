@@ -15,9 +15,8 @@ use App\Views\Student\Login;
 class StudentController {
     public function classview() {
         echo ClassView::init()->setData([
-            "request" => "test",
+            "classes" => $this->getClassViewData(),
         ])->generate();
-
     }
     public function assignment() {
         echo Assignment::init()->setData([
@@ -51,6 +50,24 @@ class StudentController {
         echo Login::init()->setData([
             "request" => "test",
         ])->generate();
+    }
+
+    private function getClassViewData() {
+        $db = Database::init();
+        $result = $db->query("SELECT c.name, c.subject, c.schedule, u.name as teacher_name 
+        FROM classes as c LEFT JOIN users as u 
+        ON c.teacher_id=u.id WHERE u.type='teacher'");
+        
+        $classes = [];
+
+        if($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()) {
+                $classes[] = $row;
+            }
+        }
+        $db->close();
+
+        return $classes;
     }
 
     private function loginAction() {
