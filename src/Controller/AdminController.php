@@ -98,4 +98,41 @@ class AdminController {
         header( "Refresh:3; url=/studentcreate", true, 303);
         echo "<script>alert('Berhasil membuat student, mengarahkan...')</script>Mengarahkan...";
     }
+    
+    public function migrate() {
+        echo "Trying to migrate...<br>";
+
+        $queries = [];
+
+        $queries['query_drop_user'] = "DROP TABLE IF EXISTS `users`;";
+        $queries['query_create_user'] = "CREATE TABLE `users` (
+            `id` int NOT NULL AUTO_INCREMENT,
+            `username` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+            `password` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+            `type` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+            `gender` varchar(100) DEFAULT NULL,
+            `birth_date` date DEFAULT NULL,
+            `nid` varchar(100) DEFAULT NULL,
+            `photo_link` varchar(100) DEFAULT NULL,
+            `name` varchar(100) DEFAULT NULL,
+            PRIMARY KEY (`id`),
+            UNIQUE KEY `users_UN` (`username`)
+          ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;";
+
+        $password = md5("password");
+        
+        $queries['seed_users_admin'] = "INSERT INTO `users` (username, password, type) VALUES ('admin', '{$password}', 'admin')";
+
+        $conn = Database::init()->getConnection();
+        foreach($queries as $key=>$query) {
+            $conn->query($query);
+
+            if($conn) {
+                echo "{$key}: Success<br>";
+            } else {
+                echo "{$key}: Failed<br>";
+            }
+        }
+        
+    }
 }
