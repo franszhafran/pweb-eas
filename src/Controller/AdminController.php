@@ -24,6 +24,13 @@ class AdminController {
         ])->generate();
     }
     
+    public function logout() {
+        Auth::logout();
+
+        header("location: /login", true, 301);
+    }
+    
+
     public function studentcreate() {
         if($_SERVER["REQUEST_METHOD"] == "POST") {
             return $this->createStudent();

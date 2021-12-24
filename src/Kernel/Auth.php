@@ -17,6 +17,10 @@ class Auth {
         return $_SESSION['username'];
     }
 
+    private function logout() {
+        unset($_SESSION['username']);
+    }
+
     private function getUser(): array {
         if($this->check()) {
             $result = Database::init()->query("SELECT id, username FROM users WHERE username='{$this->get()}' LIMIT 1");

@@ -25,6 +25,7 @@ session_start();
 $route_map = new Kernel\RouteMap();
 // Admin
 $route_map->addRouteMap("/login", Controller\AdminController::class, "login");
+$route_map->addRouteMap("/logout", Controller\AdminController::class, "logout");
 $route_map->addRouteMap("/studentcreate", Controller\AdminController::class, "studentcreate");
 $route_map->addRouteMap("/studentmanage", Controller\AdminController::class, "studentManage");
 
