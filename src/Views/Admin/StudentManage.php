@@ -24,6 +24,19 @@ class StudentManage {
             if(\is_string($d)) {
                 $html = str_replace("{{\$" . $key . "}}", $d, $html);
             }
+            if($key == "students") {
+                $table = "";
+                foreach($d as $idx=>$student) {
+                    $num = $idx+1;
+                    $table .= "<tr>";
+                    $table .= "<td>{$num}</td>";
+                    $table .= "<td>{$student['name']}</td>";
+                    $table .= "<td>{$student['username']}</td>";
+                    $table .= "<td>.</td>";
+                    $table .= "</tr>";
+                }
+                $html = str_replace("{{\$" . $key . "}}", $table, $html);
+            }
         }
         return $html;
     }

@@ -38,7 +38,7 @@ class AdminController {
     private function createStudent() {
         $request = Request::init();
 
-        $query = "INSERT INTO users (username, password, type, nid, gender, birth_date, photo_link, name) VALUES (?, ?, ?, ?, ?, ?, ?);";
+        $query = "INSERT INTO users (username, password, type, nid, gender, birth_date, photo_link, name) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
 
         $db = Database::init();
         $stmt = $db->getConnection()->prepare($query);
@@ -56,6 +56,9 @@ class AdminController {
         $stmt->bind_param("ssssssss", ...$data);
 
         $stmt->execute();
+
+        header("location: /studentcreate", true, 301);
+        echo "<script>alert('Berhasil membuat student')</script>";
     }
 
     public function studentcreate() {
@@ -71,7 +74,7 @@ class AdminController {
         }
 
         $db = Database::init();
-        $result = $db->query("SELECT id FROM users WHERE type='student'");
+        $result = $db->query("SELECT name, username FROM users WHERE type='student'");
         
         $students = [];
 
@@ -81,6 +84,7 @@ class AdminController {
             }
         }
 
+        var_dump($students);
         echo StudentManage::init()->setData([
             "students" => $students,  
         ])->generate();
