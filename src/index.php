@@ -37,5 +37,6 @@ $route_map->addRouteMap("/academiccalendar", Controller\StudentController::class
 $route_map->addRouteMap("/sourcematerial", Controller\StudentController::class, "sourcematerial");
 
 $router = new Kernel\Router();
+$router->set404("<center><span style='font-size:24px;'>404 NOT FOUND</span></center>");
 $router->solve($_SERVER['REQUEST_URI'], $route_map);
 ?>

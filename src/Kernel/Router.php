@@ -10,7 +10,11 @@ class Router {
                 return $resolver->{$route[2]}();
             }
         }
-        echo "404";
+        echo $this->html404;
+    }
+
+    public function set404($html) {
+        $this->html404 = $html;
     }
 }
 ?>
