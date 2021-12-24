@@ -1,4 +1,5 @@
 <?php
+
 namespace App;
 
 function load_classphp($directory) {
@@ -19,10 +20,13 @@ function load_classphp($directory) {
 
 load_classphp('./');
 
+session_start();
+
 $route_map = new Kernel\RouteMap();
 // Admin
 $route_map->addRouteMap("/login", Controller\AdminController::class, "login");
 $route_map->addRouteMap("/studentcreate", Controller\AdminController::class, "studentcreate");
+$route_map->addRouteMap("/studentmanage", Controller\AdminController::class, "studentManage");
 
 // Student
 $route_map->addRouteMap("/classview", Controller\StudentController::class, "classview");
@@ -32,6 +36,11 @@ $route_map->addRouteMap("/attendance", Controller\StudentController::class, "att
 $route_map->addRouteMap("/academiccalendar", Controller\StudentController::class, "academiccalendar");
 $route_map->addRouteMap("/sourcematerial", Controller\StudentController::class, "sourcematerial");
 $route_map->addRouteMap("/student/login", Controller\StudentController::class, "login");
+
+// System
+$route_map->addRouteMap("/migrate", Controller\AdminController::class, "migrate");
+
 $router = new Kernel\Router();
+$router->set404("<center><span style='font-size:24px;'>404 NOT FOUND</span></center>");
 $router->solve($_SERVER['REQUEST_URI'], $route_map);
 ?>
