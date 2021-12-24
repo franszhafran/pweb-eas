@@ -7,6 +7,7 @@ use App\Views\Student\Assignment;
 use App\Views\Student\Attendance;
 use App\Views\Student\ClassView;
 use App\Views\Student\SourceMaterial;
+use App\Views\Student\Login;
 
 class StudentController {
     public function classview() {
@@ -39,4 +40,14 @@ class StudentController {
         ])->generate();
 
     }
+    public function login() {
+        if($_SERVER["REQUEST_METHOD"] == "POST") {
+            return $this->loginAction();
+        }
+
+        echo Login::init()->setData([
+            "request" => "test",
+        ])->generate();
+    }
+
 }

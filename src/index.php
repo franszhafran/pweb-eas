@@ -31,6 +31,7 @@ $route_map->addRouteMap("/assignment", Controller\StudentController::class, "ass
 $route_map->addRouteMap("/attendance", Controller\StudentController::class, "attendance");
 $route_map->addRouteMap("/academiccalendar", Controller\StudentController::class, "academiccalendar");
 $route_map->addRouteMap("/sourcematerial", Controller\StudentController::class, "sourcematerial");
+$route_map->addRouteMap("/student/login", Controller\StudentController::class, "login");
 $router = new Kernel\Router();
 $router->solve($_SERVER['REQUEST_URI'], $route_map);
 ?>
