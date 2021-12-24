@@ -6,6 +6,7 @@ use App\Views\Admin\Login;
 use App\Kernel\Database;
 use App\Views\Student\StudentCreate;
 use App\Kernel\Request;
+use App\Views\Student\StudentManage;
 
 class AdminController {
     public function login() {
@@ -37,7 +38,7 @@ class AdminController {
     private function createStudent() {
         $request = Request::init();
 
-        $query = "INSERT INTO users (username, password, type, nid, gender, birth_date, photo_link) VALUES (?, ?, ?, ?, ?, ?, ?);";
+        $query = "INSERT INTO users (username, password, type, nid, gender, birth_date, photo_link, name) VALUES (?, ?, ?, ?, ?, ?, ?);";
 
         $db = Database::init();
         $stmt = $db->getConnection()->prepare($query);
@@ -50,8 +51,9 @@ class AdminController {
             $request->gender,
             $request->birth_date,
             $request->photo_link,
+            $request->name,
         ];
-        $stmt->bind_param("sssssss", ...$data);
+        $stmt->bind_param("ssssssss", ...$data);
 
         $stmt->execute();
     }
@@ -61,5 +63,28 @@ class AdminController {
             return $this->createStudent();
         }
         echo StudentCreate::init()->generate();
+    }
+
+    public function studentManage() {
+        if($_SERVER["REQUEST_METHOD"] == "POST") {
+            return $this->createStudent();
+        }
+
+        $db = Database::init();
+        $result = $db->query("SELECT id FROM users WHERE type='student'");
+        
+        $students = [];
+
+        if($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()) {
+                $students[] = $row;
+            }
+        }
+
+        echo StudentManage::init()->setData([
+            "students" => $students,  
+        ])->generate();
+
+        $db->close();
     }
 }

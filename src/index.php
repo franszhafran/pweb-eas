@@ -23,6 +23,7 @@ $route_map = new Kernel\RouteMap();
 // Admin
 $route_map->addRouteMap("/login", Controller\AdminController::class, "login");
 $route_map->addRouteMap("/studentcreate", Controller\AdminController::class, "studentcreate");
+$route_map->addRouteMap("/studentmanage", Controller\AdminController::class, "studentManage");
 
 // Student
 $route_map->addRouteMap("/classview", Controller\StudentController::class, "classview");
@@ -31,6 +32,7 @@ $route_map->addRouteMap("/assignment", Controller\StudentController::class, "ass
 $route_map->addRouteMap("/attendance", Controller\StudentController::class, "attendance");
 $route_map->addRouteMap("/academiccalendar", Controller\StudentController::class, "academiccalendar");
 $route_map->addRouteMap("/sourcematerial", Controller\StudentController::class, "sourcematerial");
+
 $router = new Kernel\Router();
 $router->solve($_SERVER['REQUEST_URI'], $route_map);
 ?>
