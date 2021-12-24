@@ -34,7 +34,7 @@ class AdminController {
         }
     }
 
-    public function createStudent() {
+    private function createStudent() {
         $request = Request::init();
 
         $query = "INSERT INTO users (username, password, type, nid, gender, birth_date, photo_link) VALUES (?, ?, ?, ?, ?, ?, ?);";
@@ -43,19 +43,23 @@ class AdminController {
         $stmt = $db->getConnection()->prepare($query);
 
         $data = [
-            "abc",
-            "def",
-            "admin",
-            "123",
-            "male",
-            "2021-12-01",
-            "http://google.com",
+            $request->username,
+            $request->password,
+            "student",
+            $request->nid,
+            $request->gender,
+            $request->birth_date,
+            $request->photo_link,
         ];
         $stmt->bind_param("sssssss", ...$data);
 
         $stmt->execute();
     }
+
     public function studentcreate() {
+        if($_SERVER["REQUEST_METHOD"] == "POST") {
+            return $this->createStudent();
+        }
         echo StudentCreate::init()->generate();
     }
 }
