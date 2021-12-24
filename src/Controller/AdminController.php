@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Kernel\Auth;
 use App\Views\Admin\Login;
 use App\Kernel\Database;
 use App\Views\Student\StudentCreate;
@@ -13,7 +14,7 @@ class AdminController {
         if($_SERVER["REQUEST_METHOD"] == "POST") {
             return $this->loginAction();
         }
-
+        
         echo Login::init()->setData([
             "request" => "test",
         ])->generate();
@@ -24,11 +25,11 @@ class AdminController {
 
         $request->password = md5($request->password);
 
-        $result = Database::init()->query("SELECT id FROM users WHERE username='{$request->username}' and password='{$request->password}' and type='admin' LIMIT 1");
+        $result = Database::init()->query("SELECT id, username FROM users WHERE username='{$request->username}' and password='{$request->password}' and type='admin' LIMIT 1");
 
         if($result->num_rows > 0) {
             $row = $result->fetch_assoc();
-            $_SESSION["username"] = $row["id"];
+            Auth::auth($row['username']);
             header("location: /studentcreate", true, 301);
         } else {
             echo "User tidak ada";
@@ -57,8 +58,8 @@ class AdminController {
 
         $stmt->execute();
 
-        header("location: /studentcreate", true, 301);
-        echo "<script>alert('Berhasil membuat student')</script>";
+        header( "Refresh:3; url=/studentcreate", true, 303);
+        echo "<script>alert('Berhasil membuat student, mengarahkan...')</script>Mengarahkan...";
     }
 
     public function studentcreate() {
