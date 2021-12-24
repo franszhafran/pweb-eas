@@ -55,10 +55,12 @@ class TeacherController {
         ];
         $stmt->bind_param("sssss", ...$data);
 
-        $stmt->execute();
-
-        header("Refresh:2; url=/teacher/classes", true, 303);
-        echo "Berhasil membuat kelas, mengarahkan...";
+        if($stmt->execute()) {
+            header("Refresh:2; url=/teacher/classes", true, 303);
+            echo "Berhasil membuat kelas, mengarahkan...";
+        } else {
+            echo "Gagal, " . $stmt->error;
+        }
     }
 
     private function getClassList($id) {
@@ -89,7 +91,7 @@ class TeacherController {
         if($result->num_rows > 0) {
             $row = $result->fetch_assoc();
             Auth::auth($row['username']);
-            header("location: /teacher/classview", true, 301);
+            header("location: /teacher/classes", true, 301);
         } else {
             header("Refresh:2; url=/teacher/login", true, 303);
             echo "User tidak ada, mengarahkan...";
