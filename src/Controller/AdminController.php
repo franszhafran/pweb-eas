@@ -43,7 +43,7 @@ class AdminController {
 
     private function studentManageData() {
         $db = Database::init();
-        $result = $db->query("SELECT name, username FROM users WHERE type='student'");
+        $result = $db->query("SELECT name, username, birth_date FROM users WHERE type='student'");
         
         $students = [];
 
