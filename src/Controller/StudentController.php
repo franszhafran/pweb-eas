@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use App\Kernel\Auth;
+use App\Kernel\Database;
+use App\Kernel\Request;
 use App\Views\Student\AcademicCalendar;
 use App\Views\Student\Assignment;
 use App\Views\Student\Attendance;
@@ -48,6 +51,23 @@ class StudentController {
         echo Login::init()->setData([
             "request" => "test",
         ])->generate();
+    }
+
+    private function loginAction() {
+        $request = Request::init();
+
+        $request->password = md5($request->password);
+
+        $result = Database::init()->query("SELECT id, username FROM users WHERE username='{$request->username}' and password='{$request->password}' and type='student' LIMIT 1");
+
+        if($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            Auth::auth($row['username']);
+            header("location: /student/classview", true, 301);
+        } else {
+            header("Refresh:2; url=/student/login", true, 303);
+            echo "User tidak ada, mengarahkan...";
+        }
     }
 
 }

@@ -29,12 +29,12 @@ $route_map->addRouteMap("/studentcreate", Controller\AdminController::class, "st
 $route_map->addRouteMap("/studentmanage", Controller\AdminController::class, "studentManage");
 
 // Student
-$route_map->addRouteMap("/classview", Controller\StudentController::class, "classview");
-$route_map->addRouteMap("/create_student", Controller\AdminController::class, "createStudent");
-$route_map->addRouteMap("/assignment", Controller\StudentController::class, "assignment");
-$route_map->addRouteMap("/attendance", Controller\StudentController::class, "attendance");
-$route_map->addRouteMap("/academiccalendar", Controller\StudentController::class, "academiccalendar");
-$route_map->addRouteMap("/sourcematerial", Controller\StudentController::class, "sourcematerial");
+$route_map->addRouteMap("/student/classview", Controller\StudentController::class, "classview");
+$route_map->addRouteMap("/student/create_student", Controller\AdminController::class, "createStudent");
+$route_map->addRouteMap("/student/assignment", Controller\StudentController::class, "assignment");
+$route_map->addRouteMap("/student/attendance", Controller\StudentController::class, "attendance");
+$route_map->addRouteMap("/student/academiccalendar", Controller\StudentController::class, "academiccalendar");
+$route_map->addRouteMap("/student/sourcematerial", Controller\StudentController::class, "sourcematerial");
 $route_map->addRouteMap("/student/login", Controller\StudentController::class, "login");
 
 // System

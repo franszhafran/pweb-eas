@@ -83,7 +83,7 @@ class AdminController {
 
         $data = [
             $request->username,
-            $request->password,
+            md5($request->password),
             "student",
             $request->nid,
             $request->gender,
@@ -95,8 +95,8 @@ class AdminController {
 
         $stmt->execute();
 
-        header( "Refresh:3; url=/studentcreate", true, 303);
-        echo "<script>alert('Berhasil membuat student, mengarahkan...')</script>Mengarahkan...";
+        header("Refresh:2; url=/studentcreate", true, 303);
+        echo "Berhasil membuat student, mengarahkan...";
     }
     
     public function migrate() {
@@ -120,7 +120,7 @@ class AdminController {
           ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;";
 
         $password = md5("password");
-        
+
         $queries['seed_users_admin'] = "INSERT INTO `users` (username, password, type) VALUES ('admin', '{$password}', 'admin')";
 
         $conn = Database::init()->getConnection();
