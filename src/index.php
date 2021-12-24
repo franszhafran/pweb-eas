@@ -22,6 +22,7 @@ load_classphp('./');
 $route_map = new Kernel\RouteMap();
 $route_map->addRouteMap("/login", Controller\AdminController::class, "login");
 $route_map->addRouteMap("/classview", Controller\StudentController::class, "classview");
+$route_map->addRouteMap("/assignment", Controller\StudentController::class, "assignment");
 $router = new Kernel\Router();
 $router->solve($_SERVER['REQUEST_URI'], $route_map);
 ?>
