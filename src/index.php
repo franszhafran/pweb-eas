@@ -20,7 +20,11 @@ function load_classphp($directory) {
 load_classphp('./');
 
 $route_map = new Kernel\RouteMap();
+// Admin
 $route_map->addRouteMap("/login", Controller\AdminController::class, "login");
+$route_map->addRouteMap("/studentcreate", Controller\AdminController::class, "studentcreate");
+
+// Student
 $route_map->addRouteMap("/classview", Controller\StudentController::class, "classview");
 $route_map->addRouteMap("/assignment", Controller\StudentController::class, "assignment");
 $route_map->addRouteMap("/attendance", Controller\StudentController::class, "attendance");
