@@ -6,6 +6,7 @@ use App\Views\Student\AcademicCalendar;
 use App\Views\Student\Assignment;
 use App\Views\Student\Attendance;
 use App\Views\Student\ClassView;
+use App\Views\Student\SourceMaterial;
 
 class StudentController {
     public function classview() {
@@ -28,6 +29,12 @@ class StudentController {
     }
     public function academiccalendar() {
         echo AcademicCalendar::init()->setData([
+            "request" => "test",
+        ])->generate();
+
+    }
+    public function sourcematerial() {
+        echo SourceMaterial::init()->setData([
             "request" => "test",
         ])->generate();
 
