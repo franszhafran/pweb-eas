@@ -10,11 +10,19 @@ class Router {
                 return $resolver->{$route[2]}();
             }
         }
+        if($url == '/401') {
+            echo $this->html401;
+            return;
+        } 
         echo $this->html404;
     }
 
     public function set404($html) {
         $this->html404 = $html;
+    }
+
+    public function set401($html) {
+        $this->html401 = $html;
     }
 }
 ?>

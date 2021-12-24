@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Kernel\Auth;
 use App\Kernel\Database;
 use App\Kernel\Request;
+use App\Views\Teacher\ClassCreate;
 use App\Views\Teacher\ListClasses;
 use App\Views\Teacher\Login;
 
@@ -23,6 +24,41 @@ class TeacherController {
         echo ListClasses::init()->setData([
             "classes" => $this->getClassList(Auth::getUser()['id']),
         ])->generate();
+    }
+
+    public function classCreate() {
+        if($_SERVER["REQUEST_METHOD"] == "POST") {
+            return $this->classStore();
+        }
+        echo ClassCreate::init()->generate();
+    }
+
+    private function classStore() {
+        if(!Auth::check()) {
+            header("location: /401", true, 301);
+            exit();
+        }
+
+        $request = Request::init();
+
+        $query = "INSERT INTO classes (subject, description, name, schedule, teacher_id) VALUES (?, ?, ?, ?, ?);";
+
+        $db = Database::init();
+        $stmt = $db->getConnection()->prepare($query);
+
+        $data = [
+            $request->subject,
+            $request->description,
+            $request->name,
+            $request->schedule,
+            Auth::getUser()['id'],
+        ];
+        $stmt->bind_param("sssss", ...$data);
+
+        $stmt->execute();
+
+        header("Refresh:2; url=/teacher/classes", true, 303);
+        echo "Berhasil membuat kelas, mengarahkan...";
     }
 
     private function getClassList($id) {

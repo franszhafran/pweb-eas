@@ -47,5 +47,6 @@ $route_map->addRouteMap("/migrate", Controller\AdminController::class, "migrate"
 
 $router = new Kernel\Router();
 $router->set404("<center><span style='font-size:24px;'>404 NOT FOUND</span></center>");
+$router->set401("<center><span style='font-size:24px;'>401 UNAUTHORIZED</span></center>");
 $router->solve($_SERVER['REQUEST_URI'], $route_map);
 ?>
