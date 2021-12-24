@@ -15,6 +15,10 @@ class AdminController {
             return $this->loginAction();
         }
         
+        if(Auth::check()) {
+            header("location: /studentcreate", true, 301);
+        }
+        
         echo Login::init()->setData([
             "request" => "test",
         ])->generate();
